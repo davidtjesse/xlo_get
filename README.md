@@ -1,3 +1,5 @@
 # xlo_get
 
-Esta é uma app XLO em flutter usando o package Get.
+Language: Portugue pt-br.
+
+Esta é uma versão do app XLO, em flutter usando o package Get.
