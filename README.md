@@ -2,4 +2,4 @@
 
 Language: Brazilian Portuguese (pt-br).
 
-Versão do app XLO, em flutter usando o package Get.
+Versão do app XLO, feita em flutter usando o package Get.
