@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class StoppedAt {
-  int _stoppedAtLesson = 17;
+  int _stoppedAtLesson = 18;
 
   notImplementedMsg() => Get.defaultDialog(
       title: 'Metodo ainda não implementado',
-      middleText: 'Continua na aula $_stoppedAtLesson ...',
+      middleText: 'WIP: aula $_stoppedAtLesson ...',
       confirmTextColor: Colors.white,
       onConfirm: () {
         Get.back();

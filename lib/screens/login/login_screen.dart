@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xlo_get/controllers/login_widgets_controller.dart';
+import 'package:xlo_get/screens/login/widgets/facebook_button.dart';
 import 'package:xlo_get/xxx_temp/stopped_at.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -29,6 +30,7 @@ class LoginScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
+              FacebookButton(_loginWidgetsController),
               Padding(
                 padding: const EdgeInsets.only(top: 20, bottom: 11),
                 child: Text(
@@ -42,16 +44,12 @@ class LoginScreen extends StatelessWidget {
                 () => TextField(
                     keyboardType: TextInputType.emailAddress,
                     autocorrect: false,
-                    autofocus: true,
                     decoration: InputDecoration(
                       border: const OutlineInputBorder(),
                       errorText: _loginWidgetsController.emailErrorText.value,
                     ),
                     onChanged: _loginWidgetsController.changeEmail,
-                    enabled: true //_.enabled,
-
-                    // enabled: () {},
-                    ),
+                    enabled: _loginWidgetsController.enableLoginWidgets.value),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 3, bottom: 4, top: 26),
@@ -60,35 +58,40 @@ class LoginScreen extends StatelessWidget {
                     Expanded(
                       child: myInputFieldTitle('Senha'),
                     ),
-                    GestureDetector(
-                      child: Text(
-                        'Esqueceu sua senha?',
-                        style: TextStyle(
-                          color: Colors.blue,
-                          decoration: TextDecoration.underline,
+                    Obx(
+                      () => FlatButton(
+                        onPressed: () {
+                          if (_loginWidgetsController.enableLoginWidgets.value)
+                            StoppedAt().notImplementedMsg();
+                        },
+                        child: Text(
+                          'Esqueceu sua senha?',
+                          style: TextStyle(
+                            color:
+                                _loginWidgetsController.enableLoginWidgets.value
+                                    ? Colors.blue
+                                    : Colors.grey[400],
+                            decoration: TextDecoration.underline,
+                          ),
                         ),
                       ),
-                      onTap: () {
-                        StoppedAt().notImplementedMsg();
-                      },
-                    ),
+                    )
                   ],
                 ),
               ),
               Obx(
                 () => TextField(
-                    obscureText: true,
-                    autocorrect: false,
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      errorText:
-                          _loginWidgetsController.passwordErrorText.value,
-                    ),
-                    onChanged: _loginWidgetsController.changePassword,
-                    enabled: true //_.enabled,
+                  obscureText: true,
+                  autocorrect: false,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    errorText: _loginWidgetsController.passwordErrorText.value,
+                  ),
+                  onChanged: _loginWidgetsController.changePassword,
+                  enabled: _loginWidgetsController.enableLoginWidgets.value,
 
-                    // enabled: () {},
-                    ),
+                  // enabled: () {},
+                ),
               ),
               Container(
                 margin: EdgeInsets.symmetric(vertical: 24),
@@ -104,24 +107,62 @@ class LoginScreen extends StatelessWidget {
                     onPressed:
                         _loginWidgetsController.isLoginButtonEnabled.value
                             ? () {
-                                _loginWidgetsController.isLoading.value = true;
+                                _loginWidgetsController
+                                    .setStatusTryingLoginWithEmail();
 
                                 /*Aviso do ponto em que parou - remover*/
                                 StoppedAt().notImplementedMsg();
-
                               }
                             : null,
-                    child: _loginWidgetsController.isLoading.value
-                        ? CircularProgressIndicator()
+                    child: _loginWidgetsController.tryingLoginWithEmail.value
+                        ? CircularProgressIndicator(
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(Colors.white),
+                          )
                         : Text(
                             'Entrar',
                             style: TextStyle(
-                              color: Colors.white,
+                              color: _loginWidgetsController
+                                      .enableLoginWidgets.value
+                                  ? Colors.white
+                                  : Colors.grey,
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
                   ),
+                ),
+              ),
+              Divider(color: Colors.grey),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    const Text(
+                      'Não possui uma conta? ',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    Obx(() => GestureDetector(
+                          onTap: () {
+                            if (_loginWidgetsController
+                                .enableLoginWidgets.value) {
+                              StoppedAt().notImplementedMsg();
+                            }
+                          },
+                          child: Text(
+                            'Cadastre-se',
+                            style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              color: _loginWidgetsController
+                                      .enableLoginWidgets.value
+                                  ? Colors.blue
+                                  : Colors.grey[400],
+                              fontSize: 16,
+                            ),
+                          ),
+                        )),
+                  ],
                 ),
               )
             ],

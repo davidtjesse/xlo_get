@@ -6,8 +6,10 @@ class LoginWidgetsController {
   StringX emailErrorText = 'Email é obrigatório'.obs;
   StringX passwordErrorText = 'Digite a senha'.obs;
 
-  BoolX isLoading = false.obs;
   BoolX isLoginButtonEnabled = false.obs;
+  BoolX enableLoginWidgets = true.obs;
+  BoolX tryingLoginWithEmail = false.obs;
+  BoolX tryingLoginWithFacebook = false.obs;
 
   bool isValidEmail = false;
   bool isValidPassword = false;
@@ -30,7 +32,7 @@ class LoginWidgetsController {
 
     if (emailErrorText.value != result) {
       emailErrorText.value = result;
-      _manageButtonEnabed();
+      _manageEmailButtonEnable();
     }
   }
 
@@ -50,11 +52,25 @@ class LoginWidgetsController {
 
     if (passwordErrorText.value != result) {
       passwordErrorText.value = result;
-      _manageButtonEnabed();
+      _manageEmailButtonEnable();
     }
   }
 
-  _manageButtonEnabed() {
+  setStatusTryingLoginWithEmail() {
+    enableLoginWidgets.value = false;
+    isLoginButtonEnabled.value = false;
+    tryingLoginWithEmail.value = true;
+    tryingLoginWithFacebook.value = false;
+  }
+
+  setStatusTryingLoginWithFacebook() {
+    enableLoginWidgets.value = false;
+    isLoginButtonEnabled.value = false;
+    tryingLoginWithEmail.value = false;
+    tryingLoginWithFacebook.value = true;
+  }
+
+  _manageEmailButtonEnable() {
     if ((isValidEmail && isValidPassword) != isLoginButtonEnabled.value)
       isLoginButtonEnabled.value = isValidEmail && isValidPassword;
   }
