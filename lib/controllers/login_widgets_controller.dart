@@ -14,7 +14,7 @@ class LoginWidgetsController {
   bool isValidEmail = false;
   bool isValidPassword = false;
 
-  /* Quando há alterações no campo de email */
+  /* when the text in field of email is changed */
   changeEmail(String t) {
     String result;
 
@@ -36,6 +36,7 @@ class LoginWidgetsController {
     }
   }
 
+/* when the password field is changed */
   changePassword(String t) {
     String result;
 
@@ -70,6 +71,15 @@ class LoginWidgetsController {
     tryingLoginWithFacebook.value = true;
   }
 
+  setStatusLoginError() {
+    enableLoginWidgets.value = true;
+    isLoginButtonEnabled.value = false;
+    tryingLoginWithEmail.value = false;
+    tryingLoginWithFacebook.value = false;
+    _manageEmailButtonEnable();
+  }
+
+  /*Check if the email and password is valid */
   _manageEmailButtonEnable() {
     if ((isValidEmail && isValidPassword) != isLoginButtonEnabled.value)
       isLoginButtonEnabled.value = isValidEmail && isValidPassword;

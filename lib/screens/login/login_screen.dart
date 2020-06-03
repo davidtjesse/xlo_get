@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xlo_get/controllers/login_widgets_controller.dart';
 import 'package:xlo_get/screens/login/widgets/facebook_button.dart';
+import 'package:xlo_get/screens/login/widgets/or_divider.dart';
+import 'package:xlo_get/xxx_temp/simulations.dart';
 import 'package:xlo_get/xxx_temp/stopped_at.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -31,6 +33,7 @@ class LoginScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               FacebookButton(_loginWidgetsController),
+              OrDivider(),
               Padding(
                 padding: const EdgeInsets.only(top: 20, bottom: 11),
                 child: Text(
@@ -40,6 +43,7 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               myInputFieldTitle('E-mail'),
+              SizedBox(height: 4),
               Obx(
                 () => TextField(
                     keyboardType: TextInputType.emailAddress,
@@ -59,8 +63,8 @@ class LoginScreen extends StatelessWidget {
                       child: myInputFieldTitle('Senha'),
                     ),
                     Obx(
-                      () => FlatButton(
-                        onPressed: () {
+                      () => GestureDetector(
+                        onTap: () {
                           if (_loginWidgetsController.enableLoginWidgets.value)
                             StoppedAt().notImplementedMsg();
                         },
@@ -106,12 +110,28 @@ class LoginScreen extends StatelessWidget {
                     disabledColor: Colors.pink.withAlpha(150),
                     onPressed:
                         _loginWidgetsController.isLoginButtonEnabled.value
-                            ? () {
+                            ? () async {
                                 _loginWidgetsController
                                     .setStatusTryingLoginWithEmail();
 
-                                /*Aviso do ponto em que parou - remover*/
-                                StoppedAt().notImplementedMsg();
+                                bool success = await Simulations()
+                                    .simulateConnectionDelay(false);
+                                if (success) {
+                                  print('Logado com Sucesso');
+
+                                  Get.back();
+                                } else {
+                                  _loginWidgetsController.setStatusLoginError();
+
+                                  Get.defaultDialog(
+                                      title: 'SIMULATING A ERROR: Não foi possível fazer login',
+                                      middleText:
+                                          'Verifique se o email e senha estão corretos e a conexão com a internet',
+                                      confirmTextColor: Colors.white,
+                                      onConfirm: () {
+                                        Get.back();
+                                      });
+                                }
                               }
                             : null,
                     child: _loginWidgetsController.tryingLoginWithEmail.value
