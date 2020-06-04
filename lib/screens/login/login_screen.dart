@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:xlo_get/controllers/login_widgets_controller.dart';
 import 'package:xlo_get/screens/login/widgets/facebook_button.dart';
 import 'package:xlo_get/screens/login/widgets/or_divider.dart';
+import 'package:xlo_get/screens/signup/signup_screen.dart';
 import 'package:xlo_get/xxx_temp/simulations.dart';
 import 'package:xlo_get/xxx_temp/stopped_at.dart';
 
@@ -52,7 +53,7 @@ class LoginScreen extends StatelessWidget {
                       border: const OutlineInputBorder(),
                       errorText: _loginWidgetsController.emailErrorText.value,
                     ),
-                    onChanged: _loginWidgetsController.changeEmail,
+                    onChanged: _loginWidgetsController.onChangeEmail,
                     enabled: _loginWidgetsController.enableLoginWidgets.value),
               ),
               Padding(
@@ -91,10 +92,8 @@ class LoginScreen extends StatelessWidget {
                     border: const OutlineInputBorder(),
                     errorText: _loginWidgetsController.passwordErrorText.value,
                   ),
-                  onChanged: _loginWidgetsController.changePassword,
+                  onChanged: _loginWidgetsController.onChangePassword,
                   enabled: _loginWidgetsController.enableLoginWidgets.value,
-
-                  // enabled: () {},
                 ),
               ),
               Container(
@@ -167,7 +166,7 @@ class LoginScreen extends StatelessWidget {
                           onTap: () {
                             if (_loginWidgetsController
                                 .enableLoginWidgets.value) {
-                              StoppedAt().notImplementedMsg();
+                              Get.to(SignUpScreen());
                             }
                           },
                           child: Text(

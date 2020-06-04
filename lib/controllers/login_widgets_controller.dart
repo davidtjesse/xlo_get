@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
+import 'package:xlo_get/controllers/common_control_funcions.dart';
 
-enum LoginState { IDLE, LOADING, LOADIN_FACE, ERROR, DONE }
+//enum LoginState { IDLE, LOADING, LOADIN_FACE, ERROR, DONE }
 
 class LoginWidgetsController {
   StringX emailErrorText = 'Email é obrigatório'.obs;
@@ -15,20 +16,13 @@ class LoginWidgetsController {
   bool isValidPassword = false;
 
   /* when the text in field of email is changed */
-  changeEmail(String t) {
+  onChangeEmail(String t) {
     String result;
 
-    if (t.isEmpty)
-      result = 'Preenchimento obrigatório';
-    else if (!RegExp(
-            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-        .hasMatch(t)) {
-      result = 'Digite um email válido';
-      isValidEmail = false;
-    } else {
-      result = null;
-      isValidEmail = true;
-    }
+    Map emailCheckResult = CommonControlFunctions().checkEmailFormat(t);
+
+    result = emailCheckResult['resultMsg'];
+    isValidEmail = emailCheckResult['isValid'];
 
     if (emailErrorText.value != result) {
       emailErrorText.value = result;
@@ -36,8 +30,9 @@ class LoginWidgetsController {
     }
   }
 
+
 /* when the password field is changed */
-  changePassword(String t) {
+  onChangePassword(String t) {
     String result;
 
     if (t.isEmpty) {

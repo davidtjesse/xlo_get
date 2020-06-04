@@ -27,7 +27,6 @@ class FacebookButton extends StatelessWidget {
                       await Simulations().simulateConnectionDelay(false);
                   if (success) {
                     print('Logado com Sucesso pelo Facebook');
-
                     Get.back();
                   } else {
                     _loginWidgetsController.setStatusLoginError();

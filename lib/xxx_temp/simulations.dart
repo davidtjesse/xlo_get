@@ -1,7 +1,7 @@
 class Simulations {
 
   /*
-  * simulate de delay of the conexão of internet and return the
+  * simulate the delay of the conection of internet and return the
   * value of the parameter returnResult (true or false)
   * */
 
