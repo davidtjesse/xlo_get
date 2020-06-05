@@ -44,7 +44,7 @@ class SignUpScreen extends StatelessWidget {
           ),
           SizedBox(height: 26),
           FieldTitle('Senha', 'Use letras, números e caracteres especiais.'),
-          PasswordField(),
+          PasswordField(_widgetsCtrl),
         ],
       ),
     );
