@@ -61,8 +61,6 @@ class SignUpWidgetsController {
 
       if (text.length > 8) score++;
       if (text.length > 10) score++;
-
-
     }
 
     if (passwordStrength.value != score) {
@@ -79,8 +77,6 @@ class SignUpWidgetsController {
         _checkReadyToSignUp();
       }
     }
-
-    //     _manageEmailButtonEnable();
   }
 
   String _getText(int level) {
@@ -113,9 +109,6 @@ class SignUpWidgetsController {
 
     if (ready != enableSignUpButton.value) {
       enableSignUpButton.value = ready;
-      print('Enable = $ready');
-
-
     }
   }
 }
