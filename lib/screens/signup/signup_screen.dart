@@ -45,6 +45,27 @@ class SignUpScreen extends StatelessWidget {
           SizedBox(height: 26),
           FieldTitle('Senha', 'Use letras, números e caracteres especiais.'),
           PasswordField(_widgetsCtrl),
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 24),
+            height: 50,
+            child: RaisedButton(
+              color: Colors.pink,
+              disabledColor: Colors.pink.withAlpha(150),
+              child: Text(
+                'Cadastrar',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              onPressed: () {},
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25),
+              ),
+            ),
+          ),
         ],
       ),
     );
