@@ -9,10 +9,12 @@ class SignUpWidgetsController {
   StringX passwordStrengthInfo = "A senha é obrigatória!".obs;
   IntX passwordStrength = 0.obs;
 
-  BoolX enableSignUpWidgets = true.obs;
+  BoolX enableFormWidgets = true.obs;
+  BoolX enableSignUpButton = false.obs;
 
   bool isValidNick = false;
   bool isValidEmail = false;
+  bool isValidPassword = false;
 
   onChangeNick(String t) {
     String result;
@@ -29,7 +31,7 @@ class SignUpWidgetsController {
 
     if (nickErrorText.value != result) {
       nickErrorText.value = result;
-      // _manageEmailButtonEnable();
+      _checkReadyToSignUp();
     }
   }
 
@@ -43,28 +45,39 @@ class SignUpWidgetsController {
 
     if (emailErrorText.value != result) {
       emailErrorText.value = result;
-      //     _manageEmailButtonEnable();
+      _checkReadyToSignUp();
     }
   }
 
   onChangePassword(String text) {
     int score = 0;
+    if (text.isEmpty) {
+      passwordStrengthInfo.value = 'A senha é obrigatória!';
+      isValidPassword = false;
+    } else if (text.length > 5) {
+      if (text.contains(RegExp(r'[a-z]'))) score++;
+      if (text.contains(RegExp(r'[A-Z]'))) score++;
+      if (text.contains(RegExp(r'[0-9]'))) score++;
 
-    if (text.length > 5) {
-      score += 1;
-      if (text.length > 8) score += 1;
-      if (text.contains(RegExp(r'[0-9]'))) score += 1;
-      if (text.contains(RegExp(r'[A-Z]'))) score += 1;
+      if (text.length > 8) score++;
+      if (text.length > 10) score++;
+
+
     }
 
     if (passwordStrength.value != score) {
       passwordStrength.value = score;
 
-      if (score == 0)
+      if (score == 0) {
         passwordStrengthInfo.value =
             'A senha precisa ter mais de 5 caracteres!';
-      else
+        isValidPassword = false;
+        _checkReadyToSignUp();
+      } else {
         passwordStrengthInfo.value = _getText(score);
+        isValidPassword = true;
+        _checkReadyToSignUp();
+      }
     }
 
     //     _manageEmailButtonEnable();
@@ -72,9 +85,10 @@ class SignUpWidgetsController {
 
   String _getText(int level) {
     List<String> strength = [
-      'insuficiente',
+      'null',
       'muito fraca',
       'razoavelmente fraca',
+      'razoável',
       'razoavelmente forte',
       'forte'
     ];
@@ -85,11 +99,23 @@ class SignUpWidgetsController {
   Color getBarColor(int n) {
     List<Color> colors = [
       Colors.red,
-      Colors.orange,
-      Colors.greenAccent,
-      Colors.green,
-      Colors.blue
+      Colors.deepOrangeAccent,
+      Colors.orangeAccent,
+      Colors.lightGreen,
+      Colors.green
     ];
     return colors[n];
+  }
+
+  void _checkReadyToSignUp() {
+    bool ready;
+    ready = isValidNick && isValidEmail && isValidPassword;
+
+    if (ready != enableSignUpButton.value) {
+      enableSignUpButton.value = ready;
+      print('Enable = $ready');
+
+
+    }
   }
 }

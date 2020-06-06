@@ -25,9 +25,6 @@ class PasswordField extends StatelessWidget {
               border: n > _widgetsCtrl.passwordStrength.value - 1
                   ? Border.all(color: Colors.grey)
                   : null,
-
-              //color: n <= level ? _getColor(level) : Colors.transparent,
-              // border: n > level ? Border.all(color: Colors.grey) : null,
             ),
           ),
         ),
@@ -42,10 +39,9 @@ class PasswordField extends StatelessWidget {
             obscureText: true,
             decoration: InputDecoration(
               border: const OutlineInputBorder(),
-          //    errorText: _widgetsCtrl.passwordErrorText.value,
             ),
             onChanged: _widgetsCtrl.onChangePassword,
-            enabled: _widgetsCtrl.enableSignUpWidgets.value,
+            enabled: _widgetsCtrl.enableFormWidgets.value,
           ),
         ),
         Container(
@@ -77,37 +73,4 @@ class PasswordField extends StatelessWidget {
       ],
     );
   }
-
-  /*
-  int _calcScore(String text) {
-    int score = 0;
-    if (text.length > 8) score += 1;
-    if (text.contains(RegExp(r'[0-9]'))) score += 1;
-    if (text.contains(RegExp(r'[A-Z]'))) score += 1;
-    return score;
-  }
-
-  Color _getColor(int level) {
-    List<Color> colors = [
-      Colors.red,
-      Colors.orange,
-      Colors.greenAccent,
-      Colors.green
-    ];
-    return colors[level];
-  }
-
-  String _getText(int level) {
-    List<String> strength = [
-      'muito fraca',
-      'razoavelmente fraca',
-      'razoavelmente forte',
-      'forte'
-    ];
-    return 'Força da senha: ${strength[level]}';
-  }
-
-
-
-   */
 }
