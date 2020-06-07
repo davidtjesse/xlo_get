@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
 
-class LinkText extends StatelessWidget {
-  LinkText(this.title, this.fontSize, this.color, this.onTap);
-  final String title;
-  final double fontSize;
-  final Color color;
-  final Function onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
+// text in web link format with onTap
+Widget linkText(String title, double fontSize, Color color, Function onTap) =>
+    GestureDetector(
       child: Text(
         title,
         style: TextStyle(
@@ -19,5 +12,3 @@ class LinkText extends StatelessWidget {
       ),
       onTap: onTap,
     );
-  }
-}

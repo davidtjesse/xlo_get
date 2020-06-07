@@ -87,7 +87,7 @@ class SignUpScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 const Text('Já possui uma conta? '),
-                LinkText('Entrar', 16, Colors.blue, () => Get.back())
+                linkText('Entrar', 16, Colors.blue, () => Get.back())
               ],
             ),
           )

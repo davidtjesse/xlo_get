@@ -64,7 +64,7 @@ class LoginScreen extends StatelessWidget {
                     Expanded(
                       child: myInputFieldTitle('Senha'),
                     ),
-                    Obx(() => LinkText(
+                    Obx(() => linkText(
                                 'Esqueceu sua senha?',
                                 16,
                                 _loginWidgetsController.enableLoginWidgets.value
@@ -178,7 +178,7 @@ class LoginScreen extends StatelessWidget {
                       style: TextStyle(fontSize: 16),
                     ),
                     Obx(
-                      () => LinkText(
+                      () => linkText(
                           'Cadastre-se',
                           16,
                           _loginWidgetsController.enableLoginWidgets.value
