@@ -3,9 +3,6 @@ import 'package:xlo_get/common/custom_drawer/widgets/custom_header.dart';
 import 'package:xlo_get/common/custom_drawer/widgets/icon_section.dart';
 
 class CustomDrawer extends StatelessWidget {
-
-
-
   @override
   Widget build(BuildContext context) {
     return Drawer(
