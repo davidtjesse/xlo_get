@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
+import 'package:xlo_get/common/link_text/link_text.dart';
 import 'package:xlo_get/controllers/sign_up_widgets_controller.dart';
 import 'package:xlo_get/screens/signup/widgets/field_title.dart';
 import 'package:xlo_get/screens/signup/widgets/password_field.dart';
@@ -86,12 +87,7 @@ class SignUpScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 const Text('Já possui uma conta? '),
-                GestureDetector(
-                  onTap: () {
-                    Get.back();
-                  },
-                  child: Text('Entrar'),
-                ),
+                LinkText('Entrar', 16, Colors.blue, () => Get.back())
               ],
             ),
           )

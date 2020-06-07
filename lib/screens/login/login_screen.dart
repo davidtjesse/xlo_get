@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:xlo_get/common/link_text/link_text.dart';
 import 'package:xlo_get/controllers/login_widgets_controller.dart';
 import 'package:xlo_get/screens/login/widgets/facebook_button.dart';
 import 'package:xlo_get/screens/login/widgets/or_divider.dart';
@@ -63,8 +64,18 @@ class LoginScreen extends StatelessWidget {
                     Expanded(
                       child: myInputFieldTitle('Senha'),
                     ),
-                    Obx(
-                      () => GestureDetector(
+                    Obx(() => LinkText(
+                                'Esqueceu sua senha?',
+                                16,
+                                _loginWidgetsController.enableLoginWidgets.value
+                                    ? Colors.blue
+                                    : Colors.grey[400], () {
+                              if (_loginWidgetsController.enableLoginWidgets
+                                  .value) StoppedAt().notImplementedMsg();
+                            })
+
+                        /*
+                          GestureDetector(
                         onTap: () {
                           if (_loginWidgetsController.enableLoginWidgets.value)
                             StoppedAt().notImplementedMsg();
@@ -80,7 +91,10 @@ class LoginScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                    )
+
+                      */
+
+                        )
                   ],
                 ),
               ),
@@ -123,7 +137,8 @@ class LoginScreen extends StatelessWidget {
                                   _loginWidgetsController.setStatusLoginError();
 
                                   Get.defaultDialog(
-                                      title: 'SIMULATING A ERROR: Não foi possível fazer login',
+                                      title:
+                                          'SIMULATING A ERROR: Não foi possível fazer login',
                                       middleText:
                                           'Verifique se o email e senha estão corretos e a conexão com a internet',
                                       confirmTextColor: Colors.white,
@@ -162,25 +177,18 @@ class LoginScreen extends StatelessWidget {
                       'Não possui uma conta? ',
                       style: TextStyle(fontSize: 16),
                     ),
-                    Obx(() => GestureDetector(
-                          onTap: () {
-                            if (_loginWidgetsController
-                                .enableLoginWidgets.value) {
-                              Get.to(SignUpScreen());
-                            }
-                          },
-                          child: Text(
-                            'Cadastre-se',
-                            style: TextStyle(
-                              decoration: TextDecoration.underline,
-                              color: _loginWidgetsController
-                                      .enableLoginWidgets.value
-                                  ? Colors.blue
-                                  : Colors.grey[400],
-                              fontSize: 16,
-                            ),
-                          ),
-                        )),
+                    Obx(
+                      () => LinkText(
+                          'Cadastre-se',
+                          16,
+                          _loginWidgetsController.enableLoginWidgets.value
+                              ? Colors.blue
+                              : Colors.grey[400], () {
+                        if (_loginWidgetsController.enableLoginWidgets.value) {
+                          Get.to(SignUpScreen());
+                        }
+                      }),
+                    ),
                   ],
                 ),
               )
