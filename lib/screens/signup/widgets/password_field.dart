@@ -9,16 +9,15 @@ class PasswordField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    // bar indicator tile
     Widget _buildBar(int n) {
-      //final int level = _calcScore(pass);
       return Obx(
         () => Expanded(
           child: Container(
             margin: EdgeInsets.symmetric(horizontal: 2),
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(5)),
-              // color: _widgetsCtrl.getBarColor(n)
-
               color: n < _widgetsCtrl.passwordStrength.value
                   ? _widgetsCtrl.getBarColor(n)
                   : Colors.transparent,
