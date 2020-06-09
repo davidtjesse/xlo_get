@@ -30,8 +30,13 @@ class ImagesField extends StatelessWidget {
                             });
                           } else {
                             Get.defaultDialog(
-                                title: 'Excluir imagem',
-                                middleText: 'Tem certeza disso?',
+                                title: "Excluir esta imagem",
+                                content: Column(
+                                  children: <Widget>[
+                                    Image.file(ctrl.images[index]),
+                                    Text('\nTem ceteza disso?')
+                                  ],
+                                ),
                                 confirmTextColor: Colors.white,
                                 onConfirm: () {
                                   Get.back();
