@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:xlo_get/common/custom_drawer/custom_drawer.dart';
-import 'package:xlo_get/controllers/create_controllers.dart';
+import 'package:xlo_get/controllers/create_controller.dart';
 import 'package:xlo_get/screens/create/widgets/images_field.dart';
 
 class CreateScreen extends StatelessWidget {

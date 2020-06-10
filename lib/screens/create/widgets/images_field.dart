@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'image_source_sheet.dart';
-import 'package:xlo_get/controllers/create_controllers.dart';
+import 'package:xlo_get/controllers/create_controller.dart';
 
 class ImagesField extends StatelessWidget {
   ImagesField(this.createController);

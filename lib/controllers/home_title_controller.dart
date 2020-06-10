@@ -1,11 +1,9 @@
 import 'package:get/get.dart';
 
-class HomeTitleController extends GetController {
-  String title = '';
+class HomeController {
+  StringX title = ''.obs;
 
   void setTitle(String newTitle) {
-    title = newTitle;
-
-    update(this);
+    title.value = newTitle;
   }
 }

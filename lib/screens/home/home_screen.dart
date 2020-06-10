@@ -8,13 +8,13 @@ import 'package:xlo_get/screens/home/widgets/top_bar.dart';
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    HomeController homeCtrl = HomeController();
+
     SearchDialog searchDialog = SearchDialog();
 
     /* executado como callback quando concluida digitação do texto de pesquisa*/
     void searchDone(String search) {
-
-      /* Muda o título do AppBar */
-      Get.find<HomeTitleController>().setTitle(search);
+      homeCtrl.setTitle(search);
 
       /* TODO - o que fazer com o search? */
     }
@@ -27,41 +27,36 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: GetBuilder(
-          init: HomeTitleController(),
-          builder: (HomeTitleController homeCtrl) {
-            return homeCtrl.title.isEmpty
-                ? Text('XLO Clone - GET')
-                : GestureDetector(
-                    onTap: () => _openSearch(homeCtrl.title),
-                    child: LayoutBuilder(
-                      builder: (context, constraints) {
-                        return Container(
-                            width: constraints.biggest.width,
-                            child: Text(homeCtrl.title));
-                      },
-                    ),
-                  );
-          },
+        title: Obx(
+          () => homeCtrl.title.value.isEmpty
+              ? Text('XLO Clone - GET')
+              : GestureDetector(
+                  onTap: () => _openSearch(homeCtrl.title.value),
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      return Container(
+                          width: constraints.biggest.width,
+                          child: Text(homeCtrl.title.value));
+                    },
+                  ),
+                ),
         ),
         actions: <Widget>[
-          GetBuilder(
-              init: HomeTitleController(),
-              builder: (HomeTitleController homeCtrl) {
-                return homeCtrl.title.isEmpty
-                    ? IconButton(
-                        icon: Icon(Icons.search),
-                        onPressed: () {
-                          _openSearch('');
-                        },
-                      )
-                    : IconButton(
-                        icon: Icon(Icons.close),
-                        onPressed: () {
-                          searchDone('');
-                        },
-                      );
-              }),
+          Obx(
+            () => homeCtrl.title.value.isEmpty
+                ? IconButton(
+                    icon: Icon(Icons.search),
+                    onPressed: () {
+                      _openSearch('');
+                    },
+                  )
+                : IconButton(
+                    icon: Icon(Icons.close),
+                    onPressed: () {
+                      searchDone('');
+                    },
+                  ),
+          ),
         ],
       ),
       drawer: CustomDrawer(),
