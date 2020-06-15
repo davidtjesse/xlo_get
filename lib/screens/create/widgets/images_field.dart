@@ -10,7 +10,6 @@ class ImagesField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       children: <Widget>[
         Container(
@@ -39,7 +38,7 @@ class ImagesField extends StatelessWidget {
                             confirmTextColor: Colors.white,
                             onConfirm: () {
                               Get.back();
-                              createController.removeAt(index);
+                              createController.removePictureAt(index);
                             },
                             onCancel: () {});
                       }
@@ -77,6 +76,17 @@ class ImagesField extends StatelessWidget {
                   );
                 }),
           ),
+        ),
+        Obx(
+          () => Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              alignment: Alignment.centerLeft,
+              child: createController.pictures.length == 0
+                  ? Text(
+                      'É obrigatório adicionar imagens',
+                      style: TextStyle(color: Colors.red, fontSize: 12),
+                    )
+                  : null),
         ),
       ],
     );

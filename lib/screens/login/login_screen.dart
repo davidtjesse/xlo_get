@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xlo_get/common/link_text/link_text.dart';
+import 'package:xlo_get/common/my_input_field_title.dart';
 import 'package:xlo_get/controllers/login_widgets_controller.dart';
 import 'package:xlo_get/screens/login/widgets/facebook_button.dart';
 import 'package:xlo_get/screens/login/widgets/or_divider.dart';
@@ -13,14 +14,7 @@ class LoginScreen extends StatelessWidget {
       LoginWidgetsController();
 
   // titulo dos campos de entrada de texto
-  Text myInputFieldTitle(title) => Text(
-        title,
-        style: TextStyle(
-          fontSize: 16,
-          color: Colors.grey[800],
-          fontWeight: FontWeight.w700,
-        ),
-      );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
