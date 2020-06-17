@@ -1,17 +1,29 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:io';
-
 import 'package:xlo_get/api/api_postal_code.dart';
+import 'package:xlo_get/models/address.dart';
+
+final String defaultAddressHint = 'Antes, preencha o CEP, depois\n'
+    'revise o endereço. Complete manualmente,\n'
+    'caso estejam faltando algum dado (número,\ncomplemento, etc)';
+
+final String failAddressHint = 'Falha ao obter o endereço pelo VIACEP\n'
+    'preencha os dados manualmente.';
 
 class CreateController {
-  TextEditingController cepController = TextEditingController();
+  FocusNode addressFocusNode = FocusNode();
 
-  StringX ender = "aguardando...".obs;
+  TextEditingController cepController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
+
+  StringX addressInfo = '$defaultAddressHint'.obs;
   ListX pictures = [].obs;
 
   BoolX isCreateButtonEnabled = false.obs;
   BoolX enableCreateWidgets = true.obs;
+  BoolX hasCompleteCepData = false.obs;
 
   StringX titleTextError = 'O título é obrigatório'.obs;
   StringX descriptionTextError = 'A descrição é obrigatória'.obs;
@@ -22,6 +34,9 @@ class CreateController {
   bool isValidCEP = false;
 
   String lastValidCEP = '';
+
+  //to rescue data if has.
+  Map<String, dynamic> apiData;
 
   // add a new picture in the list pictures
   void addPicture(File file) {
@@ -73,38 +88,76 @@ class CreateController {
     }
   }
 
-  Future<void> onChangeCEP(String t) async {
-    String result;
-
-    if (t.isEmpty) {
-      result = 'O CEP é obrigatório';
-      isValidCEP = false;
-    } else if (t.trim().length < 10) {
-      result = 'Digite um CEP válido';
-      isValidCEP = false;
-    } else {
-      result = null;
-
-      if (lastValidCEP != t) {
-        ender.value = 'Verificando CEP, aguarde...';
-        lastValidCEP = t;
-        var z = await getAddressFromAPI(t);
-        if (z['address'] != null)
-          ender.value = z.toString();
-        else
-          ender.value = z['msg'];
-      }
-      isValidCEP = true;
-    }
-
-    if (cepTextError.value != result) {
-      cepTextError.value = result;
-
+  void checkErrText(String errText) {
+    if (cepTextError.value != errText) {
+      cepTextError.value = errText;
       checkFormValidation();
     }
   }
 
-  void processCEPResult(result) {}
+  void onChangeCEP(String t) {
+    if (t.isEmpty) {
+      checkErrText('O CEP é obrigatório');
+      isValidCEP = false;
+    } else if (t.trim().length < 10) {
+      checkErrText('Digite um CEP válido');
+      isValidCEP = false;
+    } else {
+      checkErrText(null);
+      /*prevent typing fail excess*/
+      t = t.substring(0, 10);
+      if (lastValidCEP != t) {
+        checkErrText('Verificando CEP, aguarde...');
+        executeApi(t);
+      } else
+        processApiData(t);
+    }
+  }
+
+  Future<void> executeApi(String cep) async {
+    lastValidCEP = cep;
+    apiData = await getAddressFromAPI(cep);
+    processApiData(cep);
+  }
+
+  void processApiData(cep) {
+    if (apiData['address'] != null) {
+      // if the zip code exists
+      Address address = apiData['address'];
+      checkErrText(null);
+      addressController.text = '${address.place}, ${address.district}\n'
+          '${address.city} - ${address.federativeUnit}\nCEP ${address.postalCode}';
+      isValidCEP = true;
+    } else if (apiData['err'] == cepApiErrCode.ERR_INVALID_CEP) {
+      // if the cep (zip code) does not exist
+      checkErrText('O CEP $cep não existe!');
+      addressController.text = '';
+      isValidCEP = false;
+    } else {
+      // executed when api connection fail
+      isValidCEP = false;
+      cepTextError.value = 'Falha de conexão com VIACEP';
+      lastValidCEP = '';
+
+      Get.defaultDialog(
+        title: 'Falha ao conexão com o VIACEP',
+        middleText: 'Tentar novamente ou preencher manualmente o endereço?',
+        textConfirm: 'Tentar novamente',
+        confirmTextColor: Colors.white,
+        onConfirm: () {
+          Get.back();
+          executeApi(cep);
+        },
+        textCancel: 'Preencher manualmente',
+        onCancel: () {
+          isValidCEP = true;
+          Get.back();
+          addressInfo.value = failAddressHint;
+          addressFocusNode.requestFocus();
+        },
+      );
+    }
+  }
 
   void checkFormValidation() {
     if (isValidTitle && isValidDescription && isValidCEP)

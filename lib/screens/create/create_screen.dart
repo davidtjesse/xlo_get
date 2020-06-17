@@ -2,7 +2,6 @@ import 'package:brasil_fields/formatter/real_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:xlo_get/api/api_postal_code.dart';
 import 'package:xlo_get/common/cep_field.dart';
 import 'package:xlo_get/common/custom_drawer/custom_drawer.dart';
 import 'package:xlo_get/common/my_input_field_title.dart';
@@ -58,34 +57,48 @@ class CreateScreen extends StatelessWidget {
                 ),
                 _createController),
           ),
-          SizedBox(height: 16),
-          Obx(() => Text(_createController.ender.value)),
-          TextFormField(
-            decoration: InputDecoration(
-              labelText: 'Preço *',
-              labelStyle: TextStyle(
-                fontWeight: FontWeight.w800,
-                color: Colors.grey,
-                fontSize: 18,
-              ),
-              contentPadding: const EdgeInsets.fromLTRB(16, 10, 12, 10),
-            ),
-            keyboardType: const TextInputType.numberWithOptions(
-              decimal: true,
-              signed: false,
-            ),
-            inputFormatters: [
-              WhitelistingTextInputFormatter.digitsOnly,
-              RealInputFormatter(centavos: true),
-            ],
-            validator: (text) {
-              if (text.isEmpty) return 'campo obrigatório';
-              if (double.tryParse(text) == null)
-                return 'Utilize valores válidos';
-              return null;
-            },
-            onSaved: (price) {},
+          myInputFieldTitle('Endereço'),
+          SizedBox(height: 4),
+          Obx(
+            () => TextField(
+                maxLines: null,
+                focusNode: _createController.addressFocusNode,
+                controller: _createController.addressController,
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
+                  hintText: _createController.addressInfo.value,
+                  //  errorText: _createController.descriptionTextError.value,
+                ),
+                //  onChanged: _createController.onChangeDescription,
+                enabled: _createController.enableCreateWidgets.value),
           ),
+          SizedBox(height: 12),
+          myInputFieldTitle('Preço'),
+          SizedBox(height: 4),
+          Obx(
+            () => TextField(
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
+                  errorText: _createController.descriptionTextError.value,
+                ),
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                  signed: false,
+                ),
+                inputFormatters: [
+                  WhitelistingTextInputFormatter.digitsOnly,
+                  RealInputFormatter(centavos: true),
+                ],
+                onChanged: _createController.onChangeDescription,
+                enabled: _createController.enableCreateWidgets.value),
+          ),
+
+
+
+
+          SizedBox(height: 16),
+
+
           Container(
             height: 50,
             child: RaisedButton(
@@ -98,12 +111,7 @@ class CreateScreen extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              onPressed: () async{
-                var rt = await
-
-                getAddressFromAPI(_createController.cepController.text);
-print('RT => ${rt['address'].city}');
-                },
+              onPressed: () {},
             ),
           ),
         ],
