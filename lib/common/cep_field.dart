@@ -17,7 +17,6 @@ Widget cepField(final InputDecoration decoration,
           decoration: decoration,
           onChanged: createController.onChangeCEP,
           enabled: createController.enableCreateWidgets.value,
-
         ),
       ],
     );

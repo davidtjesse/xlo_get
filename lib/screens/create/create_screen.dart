@@ -32,6 +32,7 @@ class CreateScreen extends StatelessWidget {
                   border: const OutlineInputBorder(),
                   errorText: _createController.titleTextError.value,
                 ),
+                controller: _createController.titleController,
                 onChanged: _createController.onChangeTitle,
                 enabled: _createController.enableCreateWidgets.value),
           ),
@@ -45,6 +46,7 @@ class CreateScreen extends StatelessWidget {
                   border: const OutlineInputBorder(),
                   errorText: _createController.descriptionTextError.value,
                 ),
+                controller: _createController.descriptionController,
                 onChanged: _createController.onChangeDescription,
                 enabled: _createController.enableCreateWidgets.value),
           ),
@@ -101,23 +103,30 @@ class CreateScreen extends StatelessWidget {
                   WhitelistingTextInputFormatter.digitsOnly,
                   RealInputFormatter(centavos: true),
                 ],
+                controller: _createController.priceController,
                 onChanged: _createController.onChangePrice,
                 enabled: _createController.enableCreateWidgets.value),
           ),
           SizedBox(height: 16),
-          Container(
-            height: 50,
-            child: RaisedButton(
-              color: Colors.pink,
-              child: Text(
-                'Enviar',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
+          Obx(
+            () => Container(
+              height: 50,
+              child: RaisedButton(
+                color: Colors.pink,
+                child: Text(
+                  'Enviar',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
+                onPressed: _createController.isCreateButtonEnabled.value
+                    ? () {
+                        _createController.setAd();
+                      }
+                    : null,
               ),
-              onPressed: () {},
             ),
           ),
         ],

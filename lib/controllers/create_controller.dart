@@ -4,11 +4,17 @@ import 'package:get/get.dart';
 import 'dart:io';
 import 'package:xlo_get/api/api_postal_code.dart';
 import 'package:xlo_get/helpers/functions.dart';
+import 'package:xlo_get/models/ad.dart';
 
 class CreateController {
+  Ad ad = Ad();
+
   FocusNode priceFocusNode = FocusNode();
 
+  TextEditingController titleController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
   TextEditingController cepController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
 
   StringX addressInfo = ''.obs;
   ListX pictures = [].obs;
@@ -170,7 +176,23 @@ class CreateController {
   }
 
   void checkFormValidation() {
-    if (isValidTitle && isValidDescription && isValidCEP && isValidPrice)
-      print('Formulário validado');
+    // enable button enviar
+    isCreateButtonEnabled.value = (isValidTitle &&
+        isValidDescription &&
+        isValidCEP &&
+        isValidPrice &&
+        pictures.value.length > 0);
+  }
+
+  void setAd() {
+    ad.images = pictures.value;
+    ad.title = titleController.text;
+    ad.description = descriptionController.text;
+    ad.address = apiData['address'];
+    ad.hidePhone = true;
+    ad.price = double.parse(
+        priceController.text.replaceAll('.', '').replaceAll(',', '.'));
+
+    print(ad);
   }
 }
