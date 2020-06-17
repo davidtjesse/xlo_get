@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class StoppedAt {
-  int _stoppedAtLesson = 27;
+  int _stoppedAtLesson = 36;
 
   notImplementedMsg() => Get.defaultDialog(
       title: 'Metodo ainda não implementado',

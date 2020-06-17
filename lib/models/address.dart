@@ -14,6 +14,6 @@ class Address {
 
   @override
   String toString() {
-    return '$place, $district, $city, $postalCode, $federativeUnit';
+    return '$place${place != '' ? ',' : ''} $district${district != '' ? ',' : ''}  $city - $federativeUnit, CEP: $postalCode';
   }
 }

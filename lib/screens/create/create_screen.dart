@@ -1,5 +1,6 @@
 import 'package:brasil_fields/formatter/real_input_formatter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:xlo_get/common/cep_field.dart';
@@ -57,20 +58,30 @@ class CreateScreen extends StatelessWidget {
                 ),
                 _createController),
           ),
-          myInputFieldTitle('Endereço'),
           SizedBox(height: 4),
           Obx(
-            () => TextField(
-                maxLines: null,
-                focusNode: _createController.addressFocusNode,
-                controller: _createController.addressController,
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  hintText: _createController.addressInfo.value,
-                  //  errorText: _createController.descriptionTextError.value,
+            () => Visibility(
+              visible: _createController.addressInfo.value != '',
+              child: Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    color: _createController.addressInfo.value != 'FAIL'
+                        ? Colors.pink
+                        : Colors.red),
+                child: Text(
+                  _createController.addressInfo.value != 'FAIL'
+                      ? _createController.addressInfo.value
+                      : "Não foi possível a conexão com o VIACEP para obter a "
+                          "localização. O serviço pode estar indisponível ou "
+                          "sobrecarregado nesse momento. Mas pode cadastrar o anúncio "
+                          "assim mesmo e tentar obter a localização mais tarde.",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
-                //  onChanged: _createController.onChangeDescription,
-                enabled: _createController.enableCreateWidgets.value),
+              ),
+            ),
           ),
           SizedBox(height: 12),
           myInputFieldTitle('Preço'),
@@ -79,8 +90,9 @@ class CreateScreen extends StatelessWidget {
             () => TextField(
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
-                  errorText: _createController.descriptionTextError.value,
+                  errorText: _createController.priceTextError.value,
                 ),
+                focusNode: _createController.priceFocusNode,
                 keyboardType: const TextInputType.numberWithOptions(
                   decimal: true,
                   signed: false,
@@ -89,16 +101,10 @@ class CreateScreen extends StatelessWidget {
                   WhitelistingTextInputFormatter.digitsOnly,
                   RealInputFormatter(centavos: true),
                 ],
-                onChanged: _createController.onChangeDescription,
+                onChanged: _createController.onChangePrice,
                 enabled: _createController.enableCreateWidgets.value),
           ),
-
-
-
-
           SizedBox(height: 16),
-
-
           Container(
             height: 50,
             child: RaisedButton(

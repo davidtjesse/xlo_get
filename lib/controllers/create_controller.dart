@@ -3,35 +3,28 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:io';
 import 'package:xlo_get/api/api_postal_code.dart';
-import 'package:xlo_get/models/address.dart';
-
-final String defaultAddressHint = 'Antes, preencha o CEP, depois\n'
-    'revise o endereço. Complete manualmente,\n'
-    'caso estejam faltando algum dado (número,\ncomplemento, etc)';
-
-final String failAddressHint = 'Falha ao obter o endereço pelo VIACEP\n'
-    'preencha os dados manualmente.';
+import 'package:xlo_get/helpers/functions.dart';
 
 class CreateController {
-  FocusNode addressFocusNode = FocusNode();
+  FocusNode priceFocusNode = FocusNode();
 
   TextEditingController cepController = TextEditingController();
-  TextEditingController addressController = TextEditingController();
 
-  StringX addressInfo = '$defaultAddressHint'.obs;
+  StringX addressInfo = ''.obs;
   ListX pictures = [].obs;
 
   BoolX isCreateButtonEnabled = false.obs;
   BoolX enableCreateWidgets = true.obs;
-  BoolX hasCompleteCepData = false.obs;
 
   StringX titleTextError = 'O título é obrigatório'.obs;
   StringX descriptionTextError = 'A descrição é obrigatória'.obs;
   StringX cepTextError = 'O CEP é obrigatório'.obs;
+  StringX priceTextError = 'O preço é obrigatório'.obs;
 
   bool isValidTitle = false;
   bool isValidDescription = false;
   bool isValidCEP = false;
+  bool isValidPrice = false;
 
   String lastValidCEP = '';
 
@@ -92,6 +85,7 @@ class CreateController {
     if (cepTextError.value != errText) {
       cepTextError.value = errText;
       checkFormValidation();
+      addressInfo.value = '';
     }
   }
 
@@ -123,44 +117,60 @@ class CreateController {
   void processApiData(cep) {
     if (apiData['address'] != null) {
       // if the zip code exists
-      Address address = apiData['address'];
-      checkErrText(null);
-      addressController.text = '${address.place}, ${address.district}\n'
-          '${address.city} - ${address.federativeUnit}\nCEP ${address.postalCode}';
       isValidCEP = true;
+      checkErrText(null);
+      addressInfo.value = getLocationString(apiData['address']);
     } else if (apiData['err'] == cepApiErrCode.ERR_INVALID_CEP) {
       // if the cep (zip code) does not exist
       checkErrText('O CEP $cep não existe!');
-      addressController.text = '';
+      //  addressInfo.value = '';
       isValidCEP = false;
     } else {
       // executed when api connection fail
-      isValidCEP = false;
-      cepTextError.value = 'Falha de conexão com VIACEP';
+      isValidCEP = true;
       lastValidCEP = '';
 
       Get.defaultDialog(
-        title: 'Falha ao conexão com o VIACEP',
-        middleText: 'Tentar novamente ou preencher manualmente o endereço?',
+        title: 'Falha de conexão com o VIACEP',
+        middleText: 'Tentar novamente novamente ou tentar mais tarde?',
         textConfirm: 'Tentar novamente',
         confirmTextColor: Colors.white,
         onConfirm: () {
           Get.back();
           executeApi(cep);
         },
-        textCancel: 'Preencher manualmente',
+        textCancel: 'Tentar mais tarde',
         onCancel: () {
-          isValidCEP = true;
-          Get.back();
-          addressInfo.value = failAddressHint;
-          addressFocusNode.requestFocus();
+          priceFocusNode.requestFocus();
+          addressInfo.value = 'FAIL';
         },
       );
+    }
+    checkFormValidation();
+  }
+
+  void onChangePrice(String t) {
+    String result;
+
+    if (t.isEmpty) {
+      result = 'O preço é obrigatório';
+      isValidPrice = false;
+    } else if (t.trim().length < 4) {
+      result = 'Digite um preço válido';
+      isValidPrice = false;
+    } else {
+      result = null;
+      isValidPrice = true;
+    }
+
+    if (priceTextError.value != result) {
+      priceTextError.value = result;
+      checkFormValidation();
     }
   }
 
   void checkFormValidation() {
-    if (isValidTitle && isValidDescription && isValidCEP)
-      print('formulário validado');
+    if (isValidTitle && isValidDescription && isValidCEP && isValidPrice)
+      print('Formulário validado');
   }
 }
