@@ -48,7 +48,7 @@ class ImagesField extends StatelessWidget {
                           const EdgeInsets.only(left: 16, top: 16, bottom: 16),
                       child: index ==
                               createController
-                                  .pictures.length //   _.images.length
+                                  .pictures.length
                           ? CircleAvatar(
                               backgroundColor: Colors.grey[300],
                               radius: 52,

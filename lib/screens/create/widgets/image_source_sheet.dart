@@ -15,19 +15,25 @@ imageSourceSheet(Function(File) onImageSelected) {
     Get.back();
   }
 
-  Get.bottomSheet(Column(
-    mainAxisSize: MainAxisSize.min,
-    children: <Widget>[
-      FlatButton(
-          child: const Text('Camera'),
-          onPressed: () {
-            getImage(ImageSource.camera);
-          }),
-      FlatButton(
-          child: const Text('Galeria'),
-          onPressed: () {
-            getImage(ImageSource.gallery);
-          }),
-    ],
+  Get.bottomSheet(Container(
+    padding: EdgeInsets.all(10),
+    color: Colors.pink,
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        FlatButton(
+            child: const Text('Camera',
+                style: TextStyle(color: Colors.white, fontSize: 18)),
+            onPressed: () {
+              getImage(ImageSource.camera);
+            }),
+        FlatButton(
+            child: const Text('Galeria',
+                style: TextStyle(color: Colors.white, fontSize: 18)),
+            onPressed: () {
+              getImage(ImageSource.gallery);
+            }),
+      ],
+    ),
   ));
 }
