@@ -32,6 +32,7 @@ dependencies:
   brasil_fields: ^0.0.7+2
   image_picker: ^0.6.2+3
   dio: ^3.0.7
+  intl: ^0.16.0
 
 dev_dependencies:
   flutter_test:

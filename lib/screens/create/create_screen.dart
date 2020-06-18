@@ -6,12 +6,12 @@ import 'package:get/get.dart';
 import 'package:xlo_get/common/cep_field.dart';
 import 'package:xlo_get/common/custom_drawer/custom_drawer.dart';
 import 'package:xlo_get/common/my_input_field_title.dart';
+import 'package:xlo_get/controllers/base_screen_page_controller.dart';
 import 'package:xlo_get/controllers/create_controller.dart';
 import 'package:xlo_get/controllers/data_holder.dart';
 import 'package:xlo_get/screens/create/widgets/images_field.dart';
 
 class CreateScreen extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     print(DataHolder().adList);
@@ -129,6 +129,7 @@ class CreateScreen extends StatelessWidget {
                     ? () {
                         _createController.setAd();
                         DataHolder().adList.add(_createController.ad);
+                        BaseScreenPageController().setPage(0);
                       }
                     : null,
               ),

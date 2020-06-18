@@ -3,13 +3,15 @@ import 'package:get/get.dart';
 import 'package:xlo_get/common/custom_drawer/custom_drawer.dart';
 import 'package:xlo_get/controllers/data_holder.dart';
 import 'package:xlo_get/controllers/home_controller.dart';
+import 'package:xlo_get/screens/home/widgets/product_tile.dart';
 import 'package:xlo_get/screens/home/widgets/search_dialog.dart';
 import 'package:xlo_get/screens/home/widgets/top_bar.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    if (DataHolder().adList == null) DataHolder().adList = [];
+    DataHolder dataHolder = DataHolder();
+    if (dataHolder.adList == null) dataHolder.adList = [];
 
     HomeController homeCtrl = HomeController();
 
@@ -66,6 +68,12 @@ class HomeScreen extends StatelessWidget {
       body: Column(
         children: <Widget>[
           TopBar(),
+          Expanded(
+            child: ListView.builder(
+              itemCount: dataHolder.adList.length,
+              itemBuilder: (context, index) => ProductTile(dataHolder.adList[index]),
+            ),
+          ),
         ],
       ),
     );
