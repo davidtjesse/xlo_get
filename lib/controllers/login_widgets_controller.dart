@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:xlo_get/controllers/common_control_funcions.dart';
+import 'package:xlo_get/controllers/common_control_functions.dart';
 
 //enum LoginState { IDLE, LOADING, LOADIN_FACE, ERROR, DONE }
 

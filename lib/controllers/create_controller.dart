@@ -193,6 +193,5 @@ class CreateController {
     ad.price = double.parse(
         priceController.text.replaceAll('.', '').replaceAll(',', '.'));
 
-    print(ad);
   }
 }

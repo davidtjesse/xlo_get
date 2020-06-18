@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:xlo_get/controllers/common_control_funcions.dart';
+import 'package:xlo_get/controllers/common_control_functions.dart';
 
 class SignUpWidgetsController {
   StringX nickErrorText = 'O apelido é obrigatório'.obs;

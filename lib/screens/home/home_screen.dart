@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:xlo_get/common/custom_drawer/custom_drawer.dart';
+import 'package:xlo_get/controllers/data_holder.dart';
 import 'package:xlo_get/controllers/home_controller.dart';
 import 'package:xlo_get/screens/home/widgets/search_dialog.dart';
 import 'package:xlo_get/screens/home/widgets/top_bar.dart';
@@ -8,6 +9,8 @@ import 'package:xlo_get/screens/home/widgets/top_bar.dart';
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    if (DataHolder().adList == null) DataHolder().adList = [];
+
     HomeController homeCtrl = HomeController();
 
     SearchDialog searchDialog = SearchDialog();

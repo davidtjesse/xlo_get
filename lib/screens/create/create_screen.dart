@@ -7,11 +7,15 @@ import 'package:xlo_get/common/cep_field.dart';
 import 'package:xlo_get/common/custom_drawer/custom_drawer.dart';
 import 'package:xlo_get/common/my_input_field_title.dart';
 import 'package:xlo_get/controllers/create_controller.dart';
+import 'package:xlo_get/controllers/data_holder.dart';
 import 'package:xlo_get/screens/create/widgets/images_field.dart';
 
 class CreateScreen extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
+    print(DataHolder().adList);
+
     CreateController _createController = CreateController();
 
     return Scaffold(
@@ -124,6 +128,7 @@ class CreateScreen extends StatelessWidget {
                 onPressed: _createController.isCreateButtonEnabled.value
                     ? () {
                         _createController.setAd();
+                        DataHolder().adList.add(_createController.ad);
                       }
                     : null,
               ),
