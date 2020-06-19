@@ -34,6 +34,8 @@ dependencies:
   dio: ^3.0.7
   intl: ^0.16.0
   carousel_pro: ^1.0.0
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:
