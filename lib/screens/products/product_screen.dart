@@ -2,7 +2,9 @@ import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:xlo_get/models/ad.dart';
 import 'package:xlo_get/screens/products/widgets/description_panel.dart';
+import 'package:xlo_get/screens/products/widgets/location_panel.dart';
 import 'package:xlo_get/screens/products/widgets/mainPanel.dart';
+import 'package:xlo_get/screens/products/widgets/user_panel.dart';
 
 class ProductScreen extends StatelessWidget {
   ProductScreen(this.ad);
@@ -37,11 +39,9 @@ class ProductScreen extends StatelessWidget {
                 Divider(),
                 DescriptionPanel(ad),
                 Divider(),
-                /*
                 LocationPanel(ad),
                 Divider(),
-                UserPanel(),
-                */
+                UserPanel(ad),
               ],
             ),
           ),
