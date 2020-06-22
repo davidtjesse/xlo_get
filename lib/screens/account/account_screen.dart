@@ -8,6 +8,15 @@ class AccountScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         title: const Text('Minha conta'),
+        actions: <Widget>[
+          FlatButton(
+            onPressed: () {},
+            child: const Text(
+              'EDITAR',
+            ),
+            textColor: Colors.white,
+          )
+        ],
       ),
       drawer: CustomDrawer(),
       body: Column(
