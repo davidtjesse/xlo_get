@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:xlo_get/common/custom_drawer/custom_drawer.dart';
+import 'package:xlo_get/screens/account/edit_account_screen.dart';
 
 class AccountScreen extends StatelessWidget {
   @override
@@ -10,7 +12,7 @@ class AccountScreen extends StatelessWidget {
         title: const Text('Minha conta'),
         actions: <Widget>[
           FlatButton(
-            onPressed: () {},
+            onPressed: () {Get.to(EditAccountScreen());},
             child: const Text(
               'EDITAR',
             ),

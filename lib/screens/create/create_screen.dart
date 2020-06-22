@@ -14,8 +14,6 @@ import 'package:xlo_get/screens/create/widgets/images_field.dart';
 class CreateScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    print(DataHolder().adList);
-
     CreateController _createController = CreateController();
 
     return Scaffold(
