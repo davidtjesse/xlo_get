@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:xlo_get/controllers/base_screen_page_controller.dart';
+import 'package:xlo_get/screens/account/account_screen.dart';
 import 'package:xlo_get/screens/create/create_screen.dart';
 import 'package:xlo_get/screens/home/home_screen.dart';
 import 'package:xlo_get/xxx_temp/tempory_empty_pages.dart';
@@ -40,7 +41,7 @@ class BaseScreen extends StatelessWidget {
           CreateScreen(),
           TemporaryPage(3),
           TemporaryPage(4),
-          TemporaryPage(5),
+          AccountScreen(),
         ],
       ),
     );
